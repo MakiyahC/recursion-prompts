@@ -114,12 +114,10 @@ var exponent = function(base, exp, number = 1) {
         exp--;
     } if (exp < 0) {
         number /= base;
-        exp++;
-    }
+ 
+    }    
     
-    
-    
-    return exponent(base, exp, number, cexp);
+    return exponent(base, exp, number);
 };
 
 // 8. Determine if a number is a power of two.
@@ -127,10 +125,29 @@ var exponent = function(base, exp, number = 1) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+if (n <= 0){
+    return false;
+} else if ( n=== 1 || n === 0){
+    return true;
+} else if(n % 2 === 1){
+    return false;
+}
+    return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+var reverse = function (startString, string = "", newString = '', arr = []) {
+    if (startString.length === 0){
+        return string;
+    } else if(startString.length > 0){
+
+        for (let i = startString.length - 1; i >= 0; i--) {
+            arr.push(startString[i]);
+            newString += arr[0];
+            arr.shift();
+        } 
+    }
+    return (reverse(string, newString ,arr))
 };
 
 // 10. Write a function that determines if a string is a palindrome.
