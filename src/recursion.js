@@ -101,23 +101,18 @@ var range = function (x, y, arr = []) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-var exponent = function(base, exp, number = 1) {
-    
-    if (exp === 0){
+var exponent = function (base, exp) {
+    if (exp === 0) {
         return 1;
-    } 
+    }
+    if (exp < 0) {
+        return 1 / exponent(base, -exp)
+    }
     if (exp === 1) {
         return base;
+    } else {
+        return base *= exponent(base, exp - 1);
     }
-    if (exp > 0){
-        number *= base;
-        exp--;
-    } if (exp < 0) {
-        number /= base;
- 
-    }    
-    
-    return exponent(base, exp, number);
 };
 
 // 8. Determine if a number is a power of two.
@@ -152,9 +147,16 @@ var reverse = function (startString, string = "", newString = '', arr = []) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-    if(){
-        
+    if (string != string.split("").reverse().join("")){
+        return true;
+    }else if(string.length){
+        if (string[0] == string.split("").reverse().join("")[0]) {
+            return palindrome(string.substring(1));
+        }else {
+            return false;
+        }
     }
+    
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -168,12 +170,20 @@ var modulo = function(x, y) {
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 var multiply = function(x, y) {
+    if (x === 0 || y === 0) {
+        return 0;
+    } else if (y < 0) {
+        return -x + multiply(x, y + 1);
+    } else {
+        return x + multiply(x, y - 1);
+    }
     
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -194,11 +204,18 @@ var compareStr = function(str1, str2) {
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = function(str, i = 0, arr = []){
+    if (i >= str.length){
+        return arr;
+    }else {
+        arr.push(str[i]);
+    }
+    i++
+    return createArray(str, i, arr);
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
+var reverseArr = function (array, array2) {
 };
 
 // 18. Create a new array with a given value and length.
@@ -210,12 +227,28 @@ var buildList = function(value, length) {
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countOccurrence = function(array, value) {
+var countOccurrence = function (array, value, i = 0, sum = 0) {
+    if (i >= array.length) {
+        return sum;
+    }
+    if (array[i] === value) {
+        sum += 1;
+    }
+
+    i++;
+    return countOccurrence(array, value, i, sum);
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
-var rMap = function(array, callback) {
+var rMap = function (array, callback, i = 0, newArray = []) {
+    if (i >= array.length) {
+        return newArray;
+    } else {
+        newArray.push(callback(array[i]));
+    }
+    i++;
+    return rMap(array, callback, i, newArray)
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -256,12 +289,26 @@ var nthFibo = function(n) {
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-var capitalizeWords = function(input) {
+var capitalizeWords = function(input, i = 0, newArr = []) {
+    if (i >= input.length){
+        return newArr;
+    }else {
+        newArr.push(input[i].toUpperCase());
+    }
+    i++
+    return capitalizeWords(input, i, newArr);
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
+var capitalizeFirst = function(input, i = 0, newArr = []) {
+    if (i >= input.length) {
+        return newArr;
+    } else {
+        newArr.push(input[i][0].toUpperCase() + input[i].substring(1));
+    }
+    i++
+    return capitalizeFirst(input, i, newArr);
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
@@ -311,6 +358,9 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+
+
+
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
