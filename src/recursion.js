@@ -199,7 +199,18 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
-var compareStr = function(str1, str2) {
+var compareStr = function (str1, str2) {
+    if (str1.length === 0 && str2.length === 0) {
+        return true;
+    }
+    if (str1.charAt(0) === str2.charAt(0)) {
+        return compareStr(str1.slice(1), str2.slice(1));
+    }
+
+
+    if (str1.charAt(0) !== str2.charAt(0)) {
+        return false;
+    }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
@@ -215,7 +226,14 @@ var createArray = function(str, i = 0, arr = []){
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array, array2) {
+var reverseArr = function (array, array2 = [], num = 1) {
+    if (num >= array.length + 1){
+        return array2;
+    }else{
+        array2.push(array[array.length - num]);
+    }
+    num++
+    return reverseArr(array, array2, num)
 };
 
 // 18. Create a new array with a given value and length.
@@ -331,6 +349,7 @@ var flatten = function(arrays) {
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
 var letterTally = function(str, obj) {
+    
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -350,16 +369,42 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array) {
+var minimizeZeroes = function (array, i = 0) {
+    if (i >= array.length) {
+        return array;
+    } if (array[i] === 0) {
+        if (array[i + 1] === 0) {
+           array.splice(array[i + 1],1);
+        }
+    } i++;
+    return minimizeZeroes(array, i);
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array) {
+var alternateSign = function(array, i = 0) {
+    if (i >= array.length){
+    array[0] = Math.abs(array[0]);
+        return array;
+}
+else if(i % 2 !== 0 && array[i] >= 0){
+        array[i] = array[i]*-1;
+}
+else if (i % 2 !== 0 && array[i] < 0){
+        array[i] = array[i];
+}
+else if (i % 2 === 0 && array[i] < 0){
+        array[i] = array[i] * -1;
+} 
+else if (i % 2 === 0 && array[i] >= 0) {
+        array[i] = array[i];
+}
 
 
+i++
+return alternateSign(array, i);
 
 };
 
