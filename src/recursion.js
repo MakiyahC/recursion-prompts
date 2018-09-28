@@ -239,7 +239,13 @@ var reverseArr = function (array, array2 = [], num = 1) {
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length) {
+var buildList = function (value, length, array = [], i = 0) {
+    if (i >= length) {
+        return array;
+    } else {
+        array.push(value);
+    } i++
+    return buildList(value, length, array, i);
 };
 
 // 19. Count the occurence of a value inside a list.
@@ -301,7 +307,18 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function (n) {
+    if (n === 0) {
+        return 0;
+    }
+    if (n === 1) {
+        return 1;
+    }
+    if (n < 0) {
+        return null;
+    }
+
+    return nthFibo(n - 1) + nthFibo(n - 2);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
@@ -369,15 +386,16 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function (array, i = 0) {
-    if (i >= array.length) {
+var minimizeZeroes = function (array, i = 0, array2) {
+     array2 = array;
+    if (i >= array2.length){
         return array;
     } if (array[i] === 0) {
-        if (array[i + 1] === 0) {
-           array.splice(array[i + 1],1);
+        if (array[(i - 1)] === 0) {
+           array.splice(i -1 , 1);
         }
     } i++;
-    return minimizeZeroes(array, i);
+    return minimizeZeroes(array, i, array2);
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
