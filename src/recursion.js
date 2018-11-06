@@ -146,18 +146,15 @@ var reverse = function (startString, string = "", newString = '', arr = []) {
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
-    if (string != string.split("").reverse().join("")){
-        return true;
-    }else if(string.length){
-        if (string[0] == string.split("").reverse().join("")[0]) {
-            return palindrome(string.substring(1));
-        }else {
-            return false;
-        }
+var palindrome = function (string) {
+    if (string.length <= 1) { return true; }
+    if (string[0].toLowerCase() !== string[string.length - 1].toLowerCase()) {
+        return false;
     }
-    
-};
+    string = string.substr(1, string.length - 2);
+    string = string.replace(' ', '');
+    return palindrome(string);
+}
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
