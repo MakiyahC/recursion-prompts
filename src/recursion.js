@@ -362,17 +362,30 @@ var flatten = function(arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
-    
-};
-
-// 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
-// elements they should be replaced with a single copy of the element. The order of the
-// elements should not be changed.
-// Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
-// Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
-};
+var letterTally = function (str, obj = {}, tally = 0, i = 0) {
+    let letters = str.split('');
+    let arrOfObjKeys = Object.keys(obj);
+    if (i === letters.length) { return obj; }
+    if (!obj[letters[i]]) { obj[letters[i]] = 1; }
+    else {
+        obj[letters[i]] += 1;
+    }
+    i++;
+    return letterTally(str, obj, tally, i);
+ };
+ 
+ 
+ // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
+ // elements they should be replaced with a single copy of the element. The order of the
+ // elements should not be changed.
+ // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
+ // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
+ var compress = function (list, arr = [], i = 0) {
+    if (i === list.length) { return arr; }
+    if (list[i] !== arr[arr.length - 1]) { arr.push(list[i]); }
+    i++;
+    return compress(list, arr, i);
+ };
 
 // 32. Augment every element in a list with a new value where each element is an array
 // itself.
@@ -383,17 +396,20 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function (array, i = 0, array2) {
-     array2 = array;
-    if (i >= array2.length){
-        return array;
-    } if (array[i] === 0) {
-        if (array[(i - 1)] === 0) {
-           array.splice(i -1 , 1);
-        }
-    } i++;
-    return minimizeZeroes(array, i, array2);
-};
+var minimizeZeroes = function(array, newArr = []) {
+    if (array.length === 0) { return newArr }
+ 
+    if (array[0] !== 0) {
+        newArr.push(array[0]);
+        return minimizeZeroes(array.slice(1), newArr);
+    }
+ 
+    if (array[0] !== array[1]) {
+        newArr.push(array[0]);
+        return minimizeZeroes(array.slice(1), newArr);
+    }
+    return minimizeZeroes(array.slice(1), newArr);
+ };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
